@@ -2,9 +2,9 @@ package xserver.app;
 
 /**
 
- XServer
+ XServer Android SDK
 
- © WavyCode 2020
+ © XScoder 2020
  All Rights reserved
 
  * IMPORTANT *
