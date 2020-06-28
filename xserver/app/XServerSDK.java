@@ -2,7 +2,7 @@ package xserver.app;
 
 /**
 
- XServer
+ XServer Android SDK
 
  © XScoder 2020
  All Rights reserved
