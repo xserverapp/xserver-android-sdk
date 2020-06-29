@@ -487,11 +487,7 @@ public class XServerSDK extends Application {
                         }
 
                         // User doesn't exists in database or credentials are wrong
-                        if (j == users.count() - 1 && !ok) {
-                           if (!uObj.key("ST_username").stringValue().matches(username) && !uObj.key("ST_password").stringValue().matches(password)) {
-                              handler.done(false, E_202);
-                           }
-                        }
+                        if (j == users.count() - 1 && !ok) { handler.done(false, E_202); }
                      }// ./ For
 
                   // No users in the database!
