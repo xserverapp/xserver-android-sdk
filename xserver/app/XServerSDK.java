@@ -568,7 +568,7 @@ public class XServerSDK extends Application {
    // ------------------------------------------------
    // MARK: - XSObject -> CREATE DATA
    // ------------------------------------------------
-   public interface XSObjectHandler { void done(boolean success, String error); }
+   public interface XSObjectHandler { void done(String error, JSON object); }
    public static void XSObject(final Activity act, RequestParams params, final XSObjectHandler handler) {
 
       final HttpClient client = new AsyncHttpClient();
@@ -577,11 +577,11 @@ public class XServerSDK extends Application {
          // Success
          @Override public void onSuccess(int statusCode, Map<String, List<String>> headers, final String response) {
             act.runOnUiThread(new Runnable() { @Override public void run() {
-
-               Log.i(TAG, "XSObject -> RESPONSE: " + response);
-               if (response.matches("saved")) { handler.done(true, null);
-               } else if (response.matches(XS_ERROR)) { handler.done(false, XS_ERROR);
-               } else { handler.done(false, E_201); }
+               // Log.i(TAG, "XSObject -> RESPONSE: " + response);
+               JSON obj = new JSON(response);
+               if (response.contains("ID_id")) { handler.done(null, obj);
+               } else if (response.matches(XS_ERROR)) { handler.done(XS_ERROR, null);
+               } else { handler.done(E_201, null); }
 
             }});// ./ runOnUiThread
          }
@@ -589,16 +589,15 @@ public class XServerSDK extends Application {
          // Failed
          @Override
          public void onFailure(int statusCode, Map<String, List<String>> headers, String response) {
-            /* Server responded with a status code 4xx or 5xx error */
-            act.runOnUiThread(new Runnable() { @Override public void run() { handler.done(false, XS_ERROR); }});
+            // Server responded with a status code 4xx or 5xx error
+            act.runOnUiThread(new Runnable() { @Override public void run() { handler.done(XS_ERROR, null); }});
          }
 
          @Override
          public void onFailure(final Throwable throwable) {
-            /* An exception occurred during the request. Usually unable to connect or there was an error reading the response */
-            act.runOnUiThread(new Runnable() { @Override public void run() { handler.done(false, String.valueOf(throwable)); }});
+            // An exception occurred during the request. Usually unable to connect or there was an error reading the response 
+            act.runOnUiThread(new Runnable() { @Override public void run() { handler.done(String.valueOf(throwable), null); }});
          }});
-
    }
 
 
