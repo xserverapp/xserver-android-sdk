@@ -84,9 +84,9 @@ public class _FCMService extends FirebaseMessagingService {
 //-----------------------------------------------
 class NotificationCenter {
    private static NotificationCenter _instance;
-   private HashMap<String, ArrayList<Runnable>> registredObjects;
+   private HashMap<String, ArrayList<Runnable>> registeredObjects;
    private NotificationCenter(){
-      registredObjects = new HashMap<>();
+      registeredObjects = new HashMap<>();
    }
    static synchronized NotificationCenter defaultCenter(){
       if(_instance == null)
@@ -94,27 +94,26 @@ class NotificationCenter {
       return _instance;
    }
    synchronized void addFunctionForNotification(Runnable r){
-      ArrayList<Runnable> list = registredObjects.get("pushNotif");
+      ArrayList<Runnable> list = registeredObjects.get("pushNotif");
       if(list == null) {
          list = new ArrayList<>();
-         registredObjects.put("pushNotif", list);
+         registeredObjects.put("pushNotif", list);
       }
       list.add(r);
+      Log.i(TAG, "NOTIFICATION CENTER -> REGISTERED pushNotif: " + registeredObjects);
    }
    public synchronized void removeFunctionForNotification(String notificationName, Runnable r){
-      ArrayList<Runnable> list = registredObjects.get(notificationName);
-      if(list != null) {
-         list.remove(r);
-      }
+      ArrayList<Runnable> list = registeredObjects.get(notificationName);
+      if(list != null) { list.remove(r); }
+      registeredObjects.clear();
+      Log.i(TAG, "NOTIFICATION CENTER -> REMOVED: " + registeredObjects);
    }
    synchronized void postNotification(){
-      ArrayList<Runnable> list = registredObjects.get("pushNotif");
+      ArrayList<Runnable> list = registeredObjects.get("pushNotif");
       if(list != null) {
          for(Runnable r: list)
             r.run();
       }
    }
-
 }
-
 
