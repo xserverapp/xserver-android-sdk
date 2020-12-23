@@ -361,7 +361,7 @@ public class XServerSDK extends Application {
                   JSON objects = new JSON(response);
                   boolean ok = false;
 
-                  // Search for currentUser obj
+                  // Search for pointer object
                   if (objects.count() != 0) {
                      for (int j = 0; j < objects.count(); j++) {
                         JSON obj = objects.index(j);
@@ -376,13 +376,13 @@ public class XServerSDK extends Application {
                               handler.done(null, E_103);
                            }
                         }
-                     }// ./ For
+                     } // ./ For
 
-                     // Object not found
+                  // Object not found
                   } else { handler.done(null, E_103); }
-               }// ./ If
+               } // ./ If
 
-            }});// ./ runOnUiThread
+            }}); // ./ runOnUiThread
          }
 
          // Failed
