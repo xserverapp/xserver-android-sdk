@@ -647,7 +647,7 @@ public class XServerSDK extends Application {
 
 
    //-----------------------------------------------
-   // MARK - XSSendiOSPush -> SEND ANDROID PUSH NOTIFICATION
+   // MARK - XSSendiOSPush -> SEND iOS PUSH NOTIFICATION
    //-----------------------------------------------
    public interface XSiOSPushHandler { void done(boolean success, String error); }
    public static void XSSendiOSPush(final Activity act, String message, String deviceToken, String pushType, final XSiOSPushHandler handler) {
