@@ -4,7 +4,7 @@ package xserver.app;
 
  XServer Android SDK
 
- © XScoder 2020
+ © XScoder 2021
  All Rights reserved
 
  * IMPORTANT *
@@ -277,19 +277,19 @@ public class XServerSDK extends Application {
       if (currentUser != null) {
          // Log.i(TAG, "CURRENT USER ID: " + currentUser);
 
-         // Set the Parameters
+           // Set the Parameters
          RequestParams params = new RequestParams();
-         // no params needed
-         HttpClient client = new AsyncHttpClient();
-         client.post(TABLES_PATH + "Users.json", params, new StringHttpResponseHandler() {
+         params.put("tableName", "Users");
+         
+         final HttpClient client = new AsyncHttpClient();
+         client.post(TABLES_PATH + "m-query.php?", params, new StringHttpResponseHandler() {
 
             // Success
             @Override public void onSuccess(int statusCode, Map<String, List<String>> headers, final String response) {
                act.runOnUiThread(new Runnable() { @Override public void run() {
                   // Log.i(TAG, "XSCurrentUser -> RESPONSE: " + response);
 
-                  if (response.matches(XS_ERROR)) {
-                     handler.done(null);
+                  if (response.matches(XS_ERROR)) { handler.done(null);
                   } else {
                      JSON users = new JSON(response);
                      boolean ok = false;
@@ -342,15 +342,16 @@ public class XServerSDK extends Application {
 
 
    // ------------------------------------------------
-   // MARK: - XSGetUserPointer -> GET OBJECT POINTER
+   // MARK: - XSGetPointer -> GET OBJECT POINTER
    // ------------------------------------------------
    public interface XSPointerHandler { void done(JSON pointerObj, String error); }
    public static void XSGetPointer(final Activity act, final String id, String tableName, final XSPointerHandler handler) {
-      // Parameters
-      RequestParams params = new RequestParams();
-      // no params needed
-      HttpClient client = new AsyncHttpClient();
-      client.post(TABLES_PATH + tableName + ".json", params, new StringHttpResponseHandler() {
+       // Set the Parameters
+       RequestParams params = new RequestParams();
+       params.put("tableName", "Users");
+
+       final HttpClient client = new AsyncHttpClient();
+       client.post(TABLES_PATH + "m-query.php?", params, new StringHttpResponseHandler() {
 
          // Success
          @Override public void onSuccess(int statusCode, Map<String, List<String>> headers, final String response) {
