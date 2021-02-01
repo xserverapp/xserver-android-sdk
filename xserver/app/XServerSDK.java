@@ -348,7 +348,7 @@ public class XServerSDK extends Application {
    public static void XSGetPointer(final Activity act, final String id, String tableName, final XSPointerHandler handler) {
        // Set the Parameters
        RequestParams params = new RequestParams();
-       params.put("tableName", "Users");
+       params.put("tableName", tableName);
 
        final HttpClient client = new AsyncHttpClient();
        client.post(TABLES_PATH + "m-query.php?", params, new StringHttpResponseHandler() {
